@@ -22,9 +22,8 @@ import Logout from './pages/Logout';
 // Student Pages
 import StudentDashboardLayout from './layout/StudentDashboardLayout'; // Layout for Student Pages
 import StudentDashboard from './pages/StudentDashboard';
-import StudentAttendance from './pages/StudentAttendance';
-import StudentList from './pages/StudentList';
 import Manual from './pages/Manual';
+import TimeTable from './pages/TimeTable';
 
 // Miscellaneous Pages
 const TermsConditions = () => <div>Terms & Conditions Page</div>;
@@ -34,7 +33,7 @@ function App() {
 
   // Define Admin and Student routes
   const adminPages = ['/admindashboard', '/students', '/attendance', '/setting','/reports'];
-  const studentPages = ['/studentdashboard', '/studentattendance', '/studentlist','/manual'];
+  const studentPages = ['/studentdashboard', '/manual','/timetable'];
 
   // Determine if the current route is part of Admin or Student panel
   const isAdminPage = adminPages.some((path) => location.pathname.startsWith(path));
@@ -49,7 +48,7 @@ function App() {
         case '/attendance':
           return 'Attendance';
         case '/setting':
-          return 'Settings';
+          return 'Setting';
         case '/reports':
           return 'Reports';
         default:
@@ -57,12 +56,10 @@ function App() {
       }
     } else if (isStudentPage) {
       switch (location.pathname) {
-        case '/studentattendance':
-          return 'Student Attendance';
-        case '/studentlist':
-          return 'Student List';
         case '/manual':
           return 'Manual Calculation';
+        case '/timetable':
+          return 'Time Table';
         default:
           return 'Student Dashboard';
       }
@@ -91,9 +88,8 @@ function App() {
           <Routes>
             {/* Student Routes */}
             <Route path="/studentdashboard" element={<StudentDashboard />} />
-            <Route path="/studentattendance" element={<StudentAttendance />} />
-            <Route path="/studentlist" element={<StudentList />} />
-            <Route path="/manual" element={<Manual />} />
+            <Route path="/Manual" element={<Manual />} />
+            <Route path="/timetable" element={<TimeTable />} />
             <Route path="/logout" element={<Logout />} />
           </Routes>
         </StudentDashboardLayout>

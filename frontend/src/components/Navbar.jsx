@@ -169,8 +169,8 @@ function Navbar() {
         onClose={handleDrawerToggle}
         sx={{
           '& .MuiDrawer-paper': {
-            bgcolor: '#1a237e',
-            color: '#fff',
+            bgcolor: "#1976c7",
+            color: '#ffffff',
           },
         }}
       >

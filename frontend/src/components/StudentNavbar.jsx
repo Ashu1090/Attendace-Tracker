@@ -8,9 +8,8 @@ const drawerWidth = 240;
 const StudentNavbar = ({ mobileOpen, handleDrawerToggle }) => {
   const navItems = [
     { text: 'StudentDashboard', path: '/studentdashboard' },
-    { text: 'StudentAttendance', path: '/studentattendance' },
-    { text: 'StudentList', path: '/studentlist' },
-    { text: 'ManualCaculation', path: '/manual' },
+    { text: 'TimeTable', path: '/timetable' },
+    { text: 'Manual', path: '/manual' },
     { text: 'Logout', path: '/logout' },
   ];
 

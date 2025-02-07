@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AppBar, Toolbar, Typography, IconButton, CssBaseline, Box, Grid, Paper, Card, CardContent, Button, Divider } from '@mui/material';
+import { AppBar, Toolbar, Typography, IconButton, CssBaseline, Box, Grid, Card, CardContent, Button, Divider, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
 import { Pie, Bar } from 'react-chartjs-2';
@@ -13,12 +13,49 @@ import { useNavigate } from 'react-router-dom';
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
+function EditEventsModal({ open, onClose, events, onSave }) {
+  const [editedEvents, setEditedEvents] = useState(events.join('\n'));
+
+  const handleSave = () => {
+    onSave(editedEvents.split('\n'));
+    onClose();
+  };
+
+  return (
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>Edit Upcoming Events</DialogTitle>
+      <DialogContent>
+        <TextField
+          multiline
+          rows={4}
+          fullWidth
+          value={editedEvents}
+          onChange={(e) => setEditedEvents(e.target.value)}
+        />
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>Cancel</Button>
+        <Button onClick={handleSave} color="primary">Save</Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
 function AdminDashboard() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [upcomingEvents, setUpcomingEvents] = useState([
+    "New policy updates are available. Check them now!",
+    "Upcoming event: Annual Day on March 10th."
+  ]);
+  const [editModalOpen, setEditModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
+  };
+
+  const handleSaveEvents = (newEvents) => {
+    setUpcomingEvents(newEvents);
   };
 
   // Data for Pie Chart
@@ -40,7 +77,7 @@ function AdminDashboard() {
     datasets: [
       {
         label: 'Attendance Percentage',
-        data: [90, 0, 0, 0, 0],
+        data: [90, 89, 94, 83, 78],
         backgroundColor: '#2196f3',
       },
     ],
@@ -121,8 +158,8 @@ function AdminDashboard() {
                 <Typography variant="h6" gutterBottom>
                   Quick Stats
                 </Typography>
-                <Typography variant="body2">Total Students: 500</Typography>
-                <Typography variant="body2">Active Classes: 10</Typography>
+                <Typography variant="body2">Total Students: 50</Typography>
+                <Typography variant="body2">Active Classes: 3</Typography>
                 <Typography variant="body2">Average Attendance: 85%</Typography>
                 <Button
                   variant="contained"
@@ -165,13 +202,29 @@ function AdminDashboard() {
                 <Typography variant="h6" gutterBottom>
                   Announcements
                 </Typography>
-                <Typography variant="body2">New policy updates are available. Check them now!</Typography>
+                {upcomingEvents.map((event, index) => (
+                  <Typography key={index} variant="body2">{event}</Typography>
+                ))}
                 <Divider sx={{ my: 1 }} />
-                <Typography variant="body2">Upcoming event: Annual Day on March 10th.</Typography>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setEditModalOpen(true)}
+                >
+                  Edit Events
+                </Button>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
+
+        {/* Edit Events Modal */}
+        <EditEventsModal
+          open={editModalOpen}
+          onClose={() => setEditModalOpen(false)}
+          events={upcomingEvents}
+          onSave={handleSaveEvents}
+        />
       </Box>
     </Box>
   );

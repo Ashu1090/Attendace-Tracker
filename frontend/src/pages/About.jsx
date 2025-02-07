@@ -84,10 +84,10 @@ Remove inactive or graduated students from the system.
             <strong>Mohammed Ashiq</strong> (Creator)
           </li>
           <li>
-            <strong>Ajith</strong> (Co-worker)
+            <strong></strong> (Co-worker)
           </li>
           <li>
-            <strong>Naga Dhanush</strong> (Co-worker)
+            <strong></strong> (Co-worker)
           </li>
         </ul>
       </Box>

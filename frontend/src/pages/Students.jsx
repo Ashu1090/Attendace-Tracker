@@ -26,9 +26,9 @@ const Students = () => {
  
   
   const [students, setStudents] = useState([
-    { id: 1, name: 'Ajith G', department: 'Bsc CS', rollNo: '22101' },
+    { id: 1, name: 'Ajith ', department: 'Bsc CS', rollNo: '22101' },
     { id: 2, name: 'Arasu', department: 'Bsc CS', rollNo: '22102' },
-    { id: 3, name: 'Dinesh T', department: 'Bsc CS', rollNo: '22103' },
+    { id: 3, name: 'Dinesh ', department: 'Bsc CS', rollNo: '22103' },
     { id: 4, name: 'Guna', department: 'Bsc CS', rollNo: '22104' },
     { id: 5, name: 'Hariharan', department: 'Bsc CS', rollNo: '22105' },
     { id: 6, name: 'Hari Krishnan', department: 'Bsc CS', rollNo: '22106' },
