@@ -37,7 +37,7 @@ Installation & Setup
 
 1. Clone the Repository
 
-git clone https://github.com/your-username/attendance-system.git
+git clone https://github.com/Ashu1090/Attendance-Tracker
 cd attendance-system
 
 2. Backend Setup
