@@ -14,21 +14,26 @@ import {
   MenuItem,
   Card,
   CardContent,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from '@mui/material';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 
 const Attendance = () => {
-  // Dummy Students (Fetch from Frontend - Replace with API later)
+  // Dummy Students (Replace with API later)
   const initialStudents = [
-    { id: 1, name: 'Ajith ', rollNo: '22101' },
+    { id: 1, name: 'Ajith', rollNo: '22101' },
     { id: 2, name: 'Arasu', rollNo: '22102' },
-    { id: 3, name: 'Dinesh ', rollNo: '22103' },
+    { id: 3, name: 'Dinesh', rollNo: '22103' },
     { id: 4, name: 'Guna', rollNo: '22104' },
     { id: 5, name: 'Hariharan', rollNo: '22105' },
     { id: 6, name: 'Hari Krishnan', rollNo: '22106' },
     { id: 7, name: 'Lakshmanan', rollNo: '22107' },
-    { id: 8, name: 'Malik' , rollNo: '22108' },
+    { id: 8, name: 'Malik', rollNo: '22108' },
     { id: 9, name: 'Mohammed Rafik', rollNo: '22109' },
     { id: 10, name: 'Mohammed Ashiq', rollNo: '22110' },
   ];
@@ -36,17 +41,21 @@ const Attendance = () => {
   // State for Attendance Data
   const [attendance, setAttendance] = useState({});
   const [pastAttendance, setPastAttendance] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filterStatus, setFilterStatus] = useState('All');
+  const [openDialog, setOpenDialog] = useState(false);
 
   // Load Past Attendance Data (Simulated Backend Data)
   useEffect(() => {
-    const dummyPastAttendance = [
-      { date: '2025-01-01', present: 8, absent: 2 },
-      { date: '2025-01-02', present: 7, absent: 3 },
-      { date: '2025-01-03', present: 9, absent: 1 },
-      { date: '2025-01-04', present: 6, absent: 4 },
-      { date: '2025-01-05', present: 10, absent: 0 },
-    ];
-    setPastAttendance(dummyPastAttendance);
+    const fetchPastAttendance = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/attendance');
+        setPastAttendance(response.data);
+      } catch (error) {
+        console.error('Error fetching past attendance:', error);
+      }
+    };
+    fetchPastAttendance();
   }, []);
 
   // Handle Attendance Selection
@@ -72,21 +81,52 @@ const Attendance = () => {
       }));
 
       await axios.post('http://localhost:5000/api/attendance', { attendance: attendanceData });
-
-      alert('Attendance Saved Successfully!');
-
-      // Reset Attendance Data
-      setAttendance({});
+      setOpenDialog(true); // Show success popup
+      setAttendance({}); // Reset attendance data
     } catch (error) {
       console.error('Error saving attendance:', error);
     }
   };
 
+  // Filter and Search Logic
+  const filteredStudents = initialStudents.filter((student) => {
+    const matchesSearch = student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      student.rollNo.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesStatus = filterStatus === 'All' || attendance[student.id] === filterStatus;
+    return matchesSearch && matchesStatus;
+  });
+
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 4 }}>
-      <Typography variant="h4" component={motion.div} initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>
+      {/* Title */}
+      <Typography
+        variant="h4"
+        component={motion.div}
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        sx={{ bgcolor: 'violet', color: 'white', p: 2, borderRadius: 2, width: '100%', textAlign: 'center' }}
+      >
         Attendance Management
       </Typography>
+
+      {/* Search and Filter */}
+      <Box sx={{ mt: 3, display: 'flex', gap: 2 }}>
+        <TextField
+          label="Search by Name or Roll No"
+          variant="outlined"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+        <Select
+          value={filterStatus}
+          onChange={(e) => setFilterStatus(e.target.value)}
+          sx={{ minWidth: 120 }}
+        >
+          <MenuItem value="All">All</MenuItem>
+          <MenuItem value="Present">Present</MenuItem>
+          <MenuItem value="Absent">Absent</MenuItem>
+        </Select>
+      </Box>
 
       {/* Attendance Table */}
       <TableContainer component={Paper} sx={{ mt: 3, width: '100%' }} component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -100,7 +140,7 @@ const Attendance = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {initialStudents.map((student, index) => (
+            {filteredStudents.map((student, index) => (
               <TableRow key={student.id} component={motion.tr} whileHover={{ scale: 1.02 }}>
                 <TableCell>{index + 1}</TableCell>
                 <TableCell>{student.name}</TableCell>
@@ -130,6 +170,15 @@ const Attendance = () => {
       <Button variant="contained" color="primary" sx={{ mt: 3 }} onClick={saveAttendance} component={motion.button} whileHover={{ scale: 1.1 }}>
         Save Attendance
       </Button>
+
+      {/* Success Popup */}
+      <Dialog open={openDialog} onClose={() => setOpenDialog(false)}>
+        <DialogTitle>Success</DialogTitle>
+        <DialogContent>Attendance saved successfully!</DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenDialog(false)}>Close</Button>
+        </DialogActions>
+      </Dialog>
 
       {/* Past Attendance Records */}
       <Card sx={{ mt: 4, width: '80%' }}>
