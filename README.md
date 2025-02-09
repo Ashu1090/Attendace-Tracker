@@ -58,29 +58,12 @@ cd frontend
 npm install
 npm run dev
 
-4. Run the Application
+4. Backend Setup
+cd backend
+npm i init
+npm start
 
-Ensure both frontend and backend are running simultaneously.
 
-Folder Structure
-
-attendance-system/
-│── backend/
-│   ├── models/
-│   ├── routes/
-│   ├── controllers/
-│   ├── middleware/
-│   ├── config/
-│── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── services/
-│── .gitignore
-│── README.md
-│── package.json
-
-Contributing
 
 Contributions are welcome! Feel free to submit issues or pull requests.
 
