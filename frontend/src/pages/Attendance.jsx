@@ -25,6 +25,11 @@ const Attendance = () => {
   const [filterDate, setFilterDate] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
 
+  // Generate random percentages (70% and above) for each student
+  const generateRandomPercentage = () => {
+    return (Math.random() * 30 + 70).toFixed(2) + '%';
+  };
+
   const handleAttendanceChange = (id, value) => {
     setAttendance({ ...attendance, [id]: value });
   };
@@ -45,9 +50,9 @@ const Attendance = () => {
 
   // Dummy data for past 3 days
   const past3DaysAttendance = [
-    { date: '2025-02-13', present: 8, absent: 2 },
-    { date: '2025-02-12', present: 9, absent: 1 },
-    { date: '2025-02-11', present: 7, absent: 3 },
+    { date: '2025-10-03', present: 8, absent: 2 },
+    { date: '2025-10-04', present: 9, absent: 1 },
+    { date: '2025-10-05', present: 7, absent: 3 },
   ];
 
   // Dummy data for past 3 months
@@ -76,7 +81,7 @@ const Attendance = () => {
               <TableCell sx={{ color: '#fff' }}>Student Name</TableCell>
               <TableCell sx={{ color: '#fff' }}>Roll No</TableCell>
               <TableCell sx={{ color: '#fff' }}>Attendance Status</TableCell>
-              <TableCell sx={{ color: '#fff' }}>Percentage</TableCell>
+              <TableCell sx={{ color: '#fff' }}>Monthly Percentage</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -91,7 +96,7 @@ const Attendance = () => {
                     <MenuItem value="Absent">Absent</MenuItem>
                   </Select>
                 </TableCell>
-                <TableCell>{calculatePercentage(attendance[student.id] === 'Present' ? 1 : 0, 1)}</TableCell>
+                <TableCell>{generateRandomPercentage()}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -163,28 +168,6 @@ const Attendance = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      {/* Animation for Cards */}
-      <Grid container spacing={2} sx={{ mb: 4 }}>
-        {past3DaysAttendance.map((day, index) => (
-          <Grid item xs={12} sm={6} md={4} key={index}>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-            >
-              <Card sx={{ bgcolor: '#e3f2fd' }}>
-                <CardContent>
-                  <Typography variant="h6" sx={{ color: '#1863d1' }}>{day.date}</Typography>
-                  <Typography>Present: {day.present}</Typography>
-                  <Typography>Absent: {day.absent}</Typography>
-                  <Typography>Percentage: {calculatePercentage(day.present, day.present + day.absent)}</Typography>
-                </CardContent>
-              </Card>
-            </motion.div>
-          </Grid>
-        ))}
-      </Grid>
     </Box>
   );
 };

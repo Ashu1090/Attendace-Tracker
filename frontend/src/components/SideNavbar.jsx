@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { Box, Drawer, List, ListItem, ListItemText, ListItemButton } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 function SideNavbar({ mobileOpen, handleDrawerToggle }) {
@@ -15,61 +15,43 @@ function SideNavbar({ mobileOpen, handleDrawerToggle }) {
         '& .MuiDrawer-paper': {
           width: 250,
           bgcolor: '#f4f4f4',
-          color: '#fff',
-          marginTop: '64px', // Pushes the Drawer below the AdminNavbar
-          height: 'calc(100vh - 64px)', // Makes the Drawer height fit the remaining screen space
+          color: '#000', // Changed to black for better visibility
+          marginTop: '64px',
+          height: 'calc(100vh - 64px)',
         },
       }}
     >
       <Box>
         <List>
-          <ListItem
-            component={Link}
-            to="/admindashboard"
-            onClick={handleDrawerToggle}
-            button
-          >
-            <ListItemText primary="Dashboard" />
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/admindashboard" onClick={handleDrawerToggle}>
+              <ListItemText primary="Dashboard" />
+            </ListItemButton>
           </ListItem>
-          <ListItem
-            component={Link}
-            to="/students"
-            onClick={handleDrawerToggle}
-            button
-          >
-            <ListItemText primary="Students" />
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/students" onClick={handleDrawerToggle}>
+              <ListItemText primary="Students" />
+            </ListItemButton>
           </ListItem>
-          <ListItem
-            component={Link}
-            to="/attendance"
-            onClick={handleDrawerToggle}
-            button
-          >
-            <ListItemText primary="Attendance" />
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/attendance" onClick={handleDrawerToggle}>
+              <ListItemText primary="Attendance" />
+            </ListItemButton>
           </ListItem>
-          <ListItem
-            component={Link}
-            to="/setting"
-            onClick={handleDrawerToggle}
-            button
-          >
-            <ListItemText primary="Setting" />
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/setting" onClick={handleDrawerToggle}>
+              <ListItemText primary="Setting" />
+            </ListItemButton>
           </ListItem>
-          <ListItem
-            component={Link}
-            to="/reports"
-            onClick={handleDrawerToggle}
-            button
-          >
-            <ListItemText primary="Reports" />
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/reports" onClick={handleDrawerToggle}>
+              <ListItemText primary="Reports" />
+            </ListItemButton>
           </ListItem>
-          <ListItem
-            component={Link}
-            to="/"
-            onClick={handleDrawerToggle}
-            button
-          >
-            <ListItemText primary="Logout" />
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/" onClick={handleDrawerToggle}>
+              <ListItemText primary="Logout" />
+            </ListItemButton>
           </ListItem>
         </List>
       </Box>

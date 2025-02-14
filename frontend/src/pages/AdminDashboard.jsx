@@ -10,7 +10,6 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useNavigate } from 'react-router-dom';
 
-// Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
 function EditEventsModal({ open, onClose, events, onSave }) {
@@ -22,16 +21,10 @@ function EditEventsModal({ open, onClose, events, onSave }) {
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
       <DialogTitle>Edit Upcoming Events</DialogTitle>
       <DialogContent>
-        <TextField
-          multiline
-          rows={4}
-          fullWidth
-          value={editedEvents}
-          onChange={(e) => setEditedEvents(e.target.value)}
-        />
+        <TextField multiline rows={4} fullWidth value={editedEvents} onChange={(e) => setEditedEvents(e.target.value)} />
       </DialogContent>
       <DialogActions>
         <Button onClick={onClose}>Cancel</Button>
@@ -58,173 +51,103 @@ function AdminDashboard() {
     setUpcomingEvents(newEvents);
   };
 
-  // Data for Pie Chart
   const pieData = {
-    labels: ['Students Present', 'Students Absent'],
-    datasets: [
-      {
-        label: 'Attendance',
-        data: [75, 25],
-        backgroundColor: ['#4caf50', '#f44336'],
-        hoverBackgroundColor: ['#66bb6a', '#e57373'],
-      },
-    ],
+    labels: ['Present', 'Absent'],
+    datasets: [{
+      label: 'Attendance',
+      data: [75, 25],
+      backgroundColor: ['#4caf50', '#f44336'],
+      hoverBackgroundColor: ['#66bb6a', '#e57373'],
+    }],
   };
 
-  // Data for Bar Chart
   const barData = {
-    labels: ['January', 'February', 'March', 'April', 'May'],
-    datasets: [
-      {
-        label: 'Attendance Percentage',
-        data: [90, 89, 94, 83, 78],
-        backgroundColor: '#2196f3',
-      },
-    ],
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+    datasets: [{
+      label: 'Attendance %',
+      data: [90, 89, 94, 83, 78],
+      backgroundColor: '#2196f3',
+    }],
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' } }}>
+    <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, minHeight: '100vh' }}>
       <CssBaseline />
-      {/* AppBar */}
       <AppBar position="fixed" sx={{ zIndex: (theme) => theme.zIndex.drawer + 1, bgcolor: '#1976d2' }}>
         <Toolbar>
           <IconButton edge="start" color="inherit" aria-label="menu" onClick={handleDrawerToggle}>
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>
-            Admin Dashboard
-          </Typography>
-          <IconButton color="inherit">
-            <NotificationsActiveIcon />
-          </IconButton>
-          <IconButton color="inherit">
-            <AccountCircleIcon />
-          </IconButton>
+          <Typography variant="h6" noWrap sx={{ flexGrow: 1 }}>Admin Dashboard</Typography>
+          <IconButton color="inherit"><NotificationsActiveIcon /></IconButton>
+          <IconButton color="inherit"><AccountCircleIcon /></IconButton>
         </Toolbar>
       </AppBar>
 
-      {/* SideNavbar */}
       <SideNavbar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
 
-      {/* Main Content */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          p: { xs: 2, md: 3 },
-          bgcolor: '#f4f4f4',
-          minHeight: '100vh',
-          marginTop: '30px',
-        }}
-      >
-        <Typography variant="h4" gutterBottom textAlign="center">
-          Welcome to the Admin Dashboard
-        </Typography>
-        <Typography variant="body1" gutterBottom marginBottom="20px" textAlign="center"> 
-          Here is an overview of the attendance data and system insights.
-        </Typography>
+      <Box component="main" sx={{ flexGrow: 1, p: 3, bgcolor: '#f4f4f4', mt: { xs: 7, sm: 8 } }}>
+        <Typography variant="h4" textAlign="center">Welcome to the Admin Dashboard</Typography>
+        <Typography variant="body1" textAlign="center" mb={2}>Overview of attendance data and system insights.</Typography>
 
-        {/* Dashboard Content */}
         <Grid container spacing={3}>
-          {/* Pie Chart Card */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Attendance Overview
-                </Typography>
-                <Pie data={pieData} />
+                <Typography variant="h6">Attendance Overview</Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                  <Pie data={pieData} width={150} height={150} />
+                </Box>
               </CardContent>
             </Card>
           </Grid>
 
-          {/* Bar Chart Card */}
-          <Grid item xs={12} md={6}>
+          <Grid item xs={12} md={8}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Monthly Attendance
-                </Typography>
+                <Typography variant="h6">Monthly Attendance</Typography>
                 <Bar data={barData} />
               </CardContent>
             </Card>
           </Grid>
 
-          {/* Stats and Actions */}
           <Grid item xs={12} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Quick Stats
-                </Typography>
-                <Typography variant="body2">Total Students: 50</Typography>
-                <Typography variant="body2">Active Classes: 3</Typography>
-                <Typography variant="body2">Average Attendance: 85%</Typography>
-                <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{ mt: 2 }}
-                  startIcon={<TrendingUpIcon />}
-                  onClick={() => navigate('/reports')}
-                >
-                  View Reports
-                </Button>
+                <Typography variant="h6">Quick Stats</Typography>
+                <Typography>Total Students: 50</Typography>
+                <Typography>Active Classes: 3</Typography>
+                <Typography>Avg Attendance: 85%</Typography>
+                <Button variant="contained" color="primary" sx={{ mt: 2 }} startIcon={<TrendingUpIcon />} onClick={() => navigate('/reports')}>View Reports</Button>
               </CardContent>
             </Card>
           </Grid>
 
-          {/* Settings Shortcut */}
           <Grid item xs={12} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Settings
-                </Typography>
-                <Typography variant="body2">Manage your preferences and system settings.</Typography>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  sx={{ mt: 2 }}
-                  startIcon={<SettingsIcon />}
-                  onClick={() => navigate('/setting')}
-                >
-                  Go to Settings
-                </Button>
+                <Typography variant="h6">Settings</Typography>
+                <Typography>Manage your preferences.</Typography>
+                <Button variant="contained" color="secondary" sx={{ mt: 2 }} startIcon={<SettingsIcon />} onClick={() => navigate('/setting')}>Go to Settings</Button>
               </CardContent>
             </Card>
           </Grid>
 
-          {/* Announcements Section */}
           <Grid item xs={12} md={4}>
             <Card>
               <CardContent>
-                <Typography variant="h6" gutterBottom>
-                  Announcements
-                </Typography>
+                <Typography variant="h6">Announcements</Typography>
                 {upcomingEvents.map((event, index) => (
-                  <Typography key={index} variant="body2">{event}</Typography>
+                  <Typography key={index}>{event}</Typography>
                 ))}
                 <Divider sx={{ my: 1 }} />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  onClick={() => setEditModalOpen(true)}
-                >
-                  Edit Events
-                </Button>
+                <Button variant="contained" color="primary" onClick={() => setEditModalOpen(true)}>Edit Events</Button>
               </CardContent>
             </Card>
           </Grid>
         </Grid>
 
-        {/* Edit Events Modal */}
-        <EditEventsModal
-          open={editModalOpen}
-          onClose={() => setEditModalOpen(false)}
-          events={upcomingEvents}
-          onSave={handleSaveEvents}
-        />
+        <EditEventsModal open={editModalOpen} onClose={() => setEditModalOpen(false)} events={upcomingEvents} onSave={handleSaveEvents} />
       </Box>
     </Box>
   );
