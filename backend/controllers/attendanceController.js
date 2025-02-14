@@ -1,101 +1,45 @@
-const Attendance = require('../models/Attendance');
+const Attendance = require("../models/Attendance");
 
-// Create a new attendance record
-exports.createAttendance = async (req, res) => {
+// Save attendance for a specific day
+exports.saveAttendance = async (req, res) => {
   try {
-    const { roll_no, student_name, date, status, hour, working_day, reason } = req.body;
+    const { attendance, date } = req.body;
 
-    const newAttendance = await Attendance.create({
-      roll_no,
-      student_name,
-      date,
-      status,
-      hour,
-      working_day,
-      reason,
+    await Attendance.bulkCreate(attendance.map(entry => ({
+      ...entry,
+      date
+    })));
+
+    res.json({ message: "Attendance saved successfully ✅" });
+  } catch (error) {
+    console.error("Error saving attendance:", error);
+    res.status(500).json({ message: "Error saving attendance ❌" });
+  }
+};
+
+// Fetch attendance records for past 5 days
+exports.getPastAttendance = async (req, res) => {
+  try {
+    const records = await Attendance.findAll({
+      attributes: ["date", "status"],
     });
 
-    res.status(201).json({ message: 'Attendance record created successfully', data: newAttendance });
-  } catch (error) {
-    console.error('Error creating attendance record:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
+    const pastRecords = records.reduce((acc, record) => {
+      const date = record.date;
+      if (!acc[date]) {
+        acc[date] = { present: 0, absent: 0 };
+      }
+      acc[date][record.status.toLowerCase()]++;
+      return acc;
+    }, {});
 
-// Get all attendance records
-exports.getAllAttendance = async (req, res) => {
-  try {
-    const attendanceRecords = await Attendance.findAll();
-    res.status(200).json(attendanceRecords);
-  } catch (error) {
-    console.error('Error fetching attendance records:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-// Get a single attendance record by ID
-exports.getAttendance = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const attendance = await Attendance.findByPk(id);
-
-    if (!attendance) {
-      return res.status(404).json({ message: 'Attendance record not found' });
-    }
-
-    res.status(200).json(attendance);
-  } catch (error) {
-    console.error('Error fetching attendance record:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-// Update an attendance record by ID
-exports.updateAttendance = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const { roll_no, student_name, date, status, hour, working_day, reason } = req.body;
-
-    const attendance = await Attendance.findByPk(id);
-
-    if (!attendance) {
-      return res.status(404).json({ message: 'Attendance record not found' });
-    }
-
-    await attendance.update({
-      roll_no,
-      student_name,
+    res.json(Object.entries(pastRecords).map(([date, counts]) => ({
       date,
-      status,
-      hour,
-      working_day,
-      reason,
-    });
-
-    res.status(200).json({ message: 'Attendance record updated successfully', data: attendance });
+      present: counts.present,
+      absent: counts.absent,
+    })));
   } catch (error) {
-    console.error('Error updating attendance record:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-};
-
-// Delete an attendance record by ID
-exports.deleteAttendance = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const attendance = await Attendance.findByPk(id);
-
-    if (!attendance) {
-      return res.status(404).json({ message: 'Attendance record not found' });
-    }
-
-    await attendance.destroy();
-
-    res.status(200).json({ message: 'Attendance record deleted successfully' });
-  } catch (error) {
-    console.error('Error deleting attendance record:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error("Error fetching past attendance:", error);
+    res.status(500).json({ message: "Error fetching data ❌" });
   }
 };

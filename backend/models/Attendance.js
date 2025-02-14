@@ -6,7 +6,7 @@ const Attendance = sequelize.define("Attendance", {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  studentName: {
+  name: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -15,14 +15,13 @@ const Attendance = sequelize.define("Attendance", {
     allowNull: false,
   },
   status: {
-    type: DataTypes.STRING,
+    type: DataTypes.ENUM("Present", "Absent"),
     allowNull: false,
   },
   date: {
     type: DataTypes.DATEONLY,
     allowNull: false,
-    defaultValue: DataTypes.NOW,
-  },
+  }
 });
 
 module.exports = Attendance;
