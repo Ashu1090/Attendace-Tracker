@@ -8,27 +8,22 @@ import { motion } from 'framer-motion';
 
 const Attendance = () => {
   const initialStudents = [
-    { id: 1, name: 'Ajith', rollNo: '22101' },
-    { id: 2, name: 'Arasu', rollNo: '22102' },
-    { id: 3, name: 'Dinesh', rollNo: '22103' },
-    { id: 4, name: 'Guna', rollNo: '22104' },
-    { id: 5, name: 'Hariharan', rollNo: '22105' },
-    { id: 6, name: 'Hari Krishnan', rollNo: '22106' },
-    { id: 7, name: 'Lakshmanan', rollNo: '22107' },
-    { id: 8, name: 'Malik', rollNo: '22108' },
-    { id: 9, name: 'Mohammed Rafik', rollNo: '22109' },
-    { id: 10, name: 'Mohammed Ashiq', rollNo: '22110' },
+    { id: 1, name: 'Ajith', rollNo: '22101', monthlyPercentage: '85%' },
+    { id: 2, name: 'Arasu', rollNo: '22102', monthlyPercentage: '90%' },
+    { id: 3, name: 'Dinesh', rollNo: '22103', monthlyPercentage: '78%' },
+    { id: 4, name: 'Guna', rollNo: '22104', monthlyPercentage: '88%' },
+    { id: 5, name: 'Hariharan', rollNo: '22105', monthlyPercentage: '92%' },
+    { id: 6, name: 'Hari Krishnan', rollNo: '22106', monthlyPercentage: '75%' },
+    { id: 7, name: 'Lakshmanan', rollNo: '22107', monthlyPercentage: '80%' },
+    { id: 8, name: 'Malik', rollNo: '22108', monthlyPercentage: '87%' },
+    { id: 9, name: 'Mohammed Rafik', rollNo: '22109', monthlyPercentage: '95%' },
+    { id: 10, name: 'Mohammed Ashiq', rollNo: '22110', monthlyPercentage: '100%' },
   ];
 
   const [attendance, setAttendance] = useState({});
   const [searchQuery, setSearchQuery] = useState('');
   const [filterDate, setFilterDate] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
-
-  // Generate random percentages (70% and above) for each student
-  const generateRandomPercentage = () => {
-    return (Math.random() * 30 + 70).toFixed(2) + '%';
-  };
 
   const handleAttendanceChange = (id, value) => {
     setAttendance({ ...attendance, [id]: value });
@@ -57,9 +52,9 @@ const Attendance = () => {
 
   // Dummy data for past 3 months
   const past3MonthsAttendance = [
-    { month: 'July 2023', present: 80, absent: 20 },
-    { month: 'August 2023', present: 85, absent: 15 },
-    { month: 'September 2023', present: 75, absent: 25 },
+    { month: 'November 2024', present: 80, absent: 20 },
+    { month: 'December 2024', present: 85, absent: 15 },
+    { month: 'January 2025', present: 75, absent: 25 },
   ];
 
   return (
@@ -96,7 +91,7 @@ const Attendance = () => {
                     <MenuItem value="Absent">Absent</MenuItem>
                   </Select>
                 </TableCell>
-                <TableCell>{generateRandomPercentage()}</TableCell>
+                <TableCell>{student.monthlyPercentage}</TableCell>
               </TableRow>
             ))}
           </TableBody>
