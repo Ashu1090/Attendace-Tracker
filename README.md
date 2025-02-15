@@ -89,27 +89,6 @@ cd attendance-management-system
    npm run dev
    ```
 
-## Deployment
-
-### Frontend (Netlify)
-
-1. Push the `frontend` code to GitHub.
-2. Connect the repository to [Netlify](https://www.netlify.com/).
-3. Set environment variables (`VITE_API_URL` pointing to the backend API).
-4. Deploy the site.
-
-### Backend (Railway)
-
-1. Push the `backend` code to GitHub.
-2. Deploy it on [Railway](https://railway.app/).
-3. Set environment variables in Railway settings.
-4. Start the server.
-
-### Database (Clever Cloud)
-
-1. Create a MySQL database on [Clever Cloud](https://www.clever-cloud.com/).
-2. Update the `.env` file with the database credentials.
-
 ## API Endpoints
 
 ### Authentication
