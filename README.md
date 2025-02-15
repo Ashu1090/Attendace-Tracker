@@ -29,12 +29,6 @@ The Attendance Management System is a web application designed to help colleges 
 - **Sequelize** (ORM for MySQL)
 - **JWT Authentication** (for secure login sessions)
 
-### Deployment
-
-- **Frontend:** Netlify
-- **Backend:** Railway
-- **Database:** Clever Cloud (MySQL)
-
 ## Installation & Setup
 
 ### Prerequisites
