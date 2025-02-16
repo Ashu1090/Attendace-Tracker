@@ -4,7 +4,17 @@
 
 The Attendance Management System is a web application designed to help colleges manage student attendance efficiently. It provides an Admin Panel where administrators can manage students and track attendance records.
 
-## Demo
+## Screenshots
+
+![Alt text](screenshots/screenshot.png)
+![Alt text](screenshots/screenshot.png)
+![Alt text](screenshots/screenshot.png)
+![Alt text](screenshots/screenshot.png)
+![Alt text](screenshots/screenshot.png)
+![Alt text](screenshots/screenshot.png)
+![Alt text](screenshots/screenshot.png)
+
+
 
 
 ## Features
