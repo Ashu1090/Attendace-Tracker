@@ -37,7 +37,6 @@ function EditEventsModal({ open, onClose, events, onSave }) {
 function AdminDashboard() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [upcomingEvents, setUpcomingEvents] = useState([
-    "New policy updates are available. Check them now!",
     "Upcoming event: Annual Day on March 10th."
   ]);
   const [editModalOpen, setEditModalOpen] = useState(false);
