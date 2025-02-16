@@ -6,7 +6,7 @@ The Attendance Management System is a web application designed to help colleges 
 
 ## Screenshots
 
-![Alt text](screenshots/screenshot.png)
+![Alt text](frontend/src/images/screenshot(112).png)
 ![Alt text](screenshots/screenshot.png)
 ![Alt text](screenshots/screenshot.png)
 ![Alt text](screenshots/screenshot.png)
