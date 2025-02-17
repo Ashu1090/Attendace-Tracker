@@ -86,7 +86,7 @@ function AdminDashboard() {
       <SideNavbar mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
 
       <Box component="main" sx={{ flexGrow: 1, p: 3, bgcolor: '#f4f4f4', mt: { xs: 7, sm: 8 } }}>
-        <Typography variant="h4" textAlign="center">Welcome to the Admin Dashboard</Typography>
+        <Typography variant="h4" marginTop="-40px" textAlign="center">Welcome to the Admin Dashboard</Typography>
         <Typography variant="body1" textAlign="center" mb={2}>Overview of attendance data and system insights.</Typography>
 
         <Grid container spacing={3}>
