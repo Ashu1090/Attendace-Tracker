@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   Dialog,
@@ -16,16 +16,15 @@ import {
   MenuItem,
   Select,
   IconButton,
+  Snackbar,
+  Alert,
 } from '@mui/material';
 import { Edit, Delete } from '@mui/icons-material';
 import DashboardLayout from '../layout/DashboardLayout';
 
-
-
 const Students = () => {
- 
-  
-  const [students, setStudents] = useState([
+  // Load students from localStorage (or use default list)
+  const initialStudents = JSON.parse(localStorage.getItem('students')) || [
     { id: 1, name: 'Ajith ', department: 'Bsc CS', rollNo: '22101' },
     { id: 2, name: 'Arasu', department: 'Bsc CS', rollNo: '22102' },
     { id: 3, name: 'Dinesh ', department: 'Bsc CS', rollNo: '22103' },
@@ -36,13 +35,20 @@ const Students = () => {
     { id: 8, name: 'Malik', department: 'Bsc CS', rollNo: '22108' },
     { id: 9, name: 'Mohammed Rafik', department: 'Bsc CS', rollNo: '22109' },
     { id: 10, name: 'Mohammed Ashiq', department: 'Bsc CS', rollNo: '22110' },
-  ]);
+  ];
 
-
+  const [students, setStudents] = useState(initialStudents);
   const [open, setOpen] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [currentId, setCurrentId] = useState(null);
   const [newStudent, setNewStudent] = useState({ name: '', department: 'Bsc CS', rollNo: '' });
+  const [confirmationDialog, setConfirmationDialog] = useState({ open: false, action: null, id: null });
+  const [snackbar, setSnackbar] = useState({ open: false, message: '', severity: 'success' });
+
+  // Save students to localStorage whenever they change
+  useEffect(() => {
+    localStorage.setItem('students', JSON.stringify(students));
+  }, [students]);
 
   const handleOpen = (student = null) => {
     if (student) {
@@ -71,23 +77,29 @@ const Students = () => {
             : student
         )
       );
+      showSnackbar('Student updated successfully!', 'success');
     } else {
-      setStudents([
-        ...students,
-        {
-          id: students.length + 1,
-          name: newStudent.name,
-          department: newStudent.department,
-          rollNo: newStudent.rollNo,
-        },
-      ]);
+      const newId = students.length ? students[students.length - 1].id + 1 : 1;
+      setStudents([...students, { id: newId, ...newStudent }]);
+      showSnackbar('Student added successfully!', 'success');
     }
     handleClose();
   };
 
-  const handleDelete = (id) => {
-    setStudents(students.filter((student) => student.id !== id));
+  const confirmDelete = (id) => {
+    setConfirmationDialog({ open: true, action: 'delete', id });
   };
+
+  const handleDelete = () => {
+    setStudents(students.filter((student) => student.id !== confirmationDialog.id));
+    showSnackbar('Student deleted successfully!', 'error');
+    setConfirmationDialog({ open: false, action: null, id: null });
+  };
+
+  const showSnackbar = (message, severity) => {
+    setSnackbar({ open: true, message, severity });
+  };
+
   return (
     <DashboardLayout title="Students">
       <div style={{ padding: '20px', backgroundColor: '#f4f4f4', minHeight: '100vh' }}>
@@ -119,7 +131,7 @@ const Students = () => {
                     <IconButton color="primary" onClick={() => handleOpen(student)}>
                       <Edit />
                     </IconButton>
-                    <IconButton color="secondary" onClick={() => handleDelete(student.id)}>
+                    <IconButton color="secondary" onClick={() => confirmDelete(student.id)}>
                       <Delete />
                     </IconButton>
                   </TableCell>
@@ -129,6 +141,7 @@ const Students = () => {
           </Table>
         </TableContainer>
 
+        {/* Add/Edit Student Dialog */}
         <Dialog open={open} onClose={handleClose}>
           <DialogTitle>{editMode ? 'Edit Student' : 'Add New Student'}</DialogTitle>
           <DialogContent>
@@ -166,6 +179,20 @@ const Students = () => {
             </Button>
             <Button onClick={handleSave} color="primary">
               {editMode ? 'Update' : 'Save'}
+            </Button>
+          </DialogActions>
+        </Dialog>
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog open={confirmationDialog.open} onClose={() => setConfirmationDialog({ open: false })}>
+          <DialogTitle>Confirm Deletion</DialogTitle>
+          <DialogContent>Are you sure you want to delete this student?</DialogContent>
+          <DialogActions>
+            <Button onClick={() => setConfirmationDialog({ open: false })} color="secondary">
+              Cancel
+            </Button>
+            <Button onClick={handleDelete} color="error">
+              Delete
             </Button>
           </DialogActions>
         </Dialog>
