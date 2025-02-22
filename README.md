@@ -107,6 +107,10 @@ cd attendance-management-system
 - `GET /api/attendance` - Get attendance records
 - `POST /api/attendance` - Mark attendance
 
+## Author
+
+This Project is made by Mohammed Ashiq !!!
+
 ## Contributing
 
 Contributions are welcome! Feel free to submit issues and pull requests.
