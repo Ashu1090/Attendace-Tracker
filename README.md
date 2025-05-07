@@ -34,25 +34,36 @@ The Attendance Management System is a web application designed to help colleges 
 ### Home page
 ![Image](https://github.com/user-attachments/assets/7b41064c-dffa-4eb6-a68e-4fa2daae376f)
 
-###About
+### About
 ![Image](https://github.com/user-attachments/assets/95d530b1-7fcd-4eba-97e1-f155c46e111a)
-###Help
+
+### Help
 ![Image](https://github.com/user-attachments/assets/c2870c7c-a909-49c1-9f5d-3b4f6f5526c1)
-###Login
+
+### Login
 ![Image](https://github.com/user-attachments/assets/8f862b17-b01f-4ae4-929b-c271b2654abc)
-###Admin dashboard
+
+### Admin dashboard
 ![Image](https://github.com/user-attachments/assets/82b3c688-5049-4827-b386-b8dc9f9c4cc3)
-###Attendace
+
+### Attendace
 ![Image](https://github.com/user-attachments/assets/2dd6e93c-94bb-4ec7-917a-ab90b5b8a7d9)
-###Studentlist
 
-###Report
+### Studentlist
+![Image](https://github.com/user-attachments/assets/69deee85-b84a-45fe-971d-90e7d1e14731)
 
-###Student dashboard
+### Report
+![Image](https://github.com/user-attachments/assets/86b7201f-d4d6-4402-877f-845a777090c3)
 
-###Timetable
+### Student dashboard
+![Image](https://github.com/user-attachments/assets/5af969d6-d63d-4368-a76d-cc3a474a43e2)
 
-###Manual
+### Timetable
+![Image](https://github.com/user-attachments/assets/d3beffbb-6785-4d7f-b449-28b61bc7ac7d)
+
+### Manual
+![Image](https://github.com/user-attachments/assets/c21d5069-bf56-4071-8d31-794477ba3891)
+
 
 ## Installation & Setup
 
