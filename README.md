@@ -33,6 +33,25 @@ The Attendance Management System is a web application designed to help colleges 
 
 ###Home page
 ![Image](https://github.com/user-attachments/assets/14cdbe1e-7058-4dfa-8c08-e9279a9bce84)
+###About
+
+###Help
+
+###Login
+
+###Admin dashboard
+
+###Attendace
+
+###Student
+
+###Report
+
+###Student dashboard
+
+###Timetable
+
+###Manual
 
 ## Installation & Setup
 
